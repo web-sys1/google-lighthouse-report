@@ -1,0 +1,56 @@
+{
+  "name": "lighthouse-report",
+  "version": "1.0.2",
+  "description": "This tool is used to fetch audits from web pages using Lighthouse through NW.js",
+  "main": "http://localhost:3034",
+  "node-main": "src/server.js",
+  "node-remote": "http://localhost:3034",
+  "webkit": {
+    "page-cache": false
+  },
+  "window": {
+    "width": 960,
+    "height": 600,
+    "min_width": 700,
+    "min_height": 500
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:server": "nodemon --delay 1 ./src/server.js",
+    "start:dev": "nw .",
+    "prod": "nwbuild --platform win64 --buildDir release/ ./",
+    "start:client": "parcel watch ./public/index.html --out-dir dist --hmr-port 50619 --target browser",
+    "clean": "rimraf dist",
+    "build:client": "parcel build ./public/index.html --out-dir dist --target browser",
+    "build": "cross-env NODE_ENV=production npm run clean && npm run build:client",
+    "server": "node ./src/server.js",
+	"server:recast": "npm run build && npm run start:dev",
+    "server:debug": "set DEBUG=koa* && node --inspect ./src/server.js"
+  },
+  "keywords": ["nwjs"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/router": "^8.0.8",
+    "cross-env": "^7.0.2",
+    "koa": "^2.12.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.2.2",
+    "lighthouse": "^8.1.0",
+    "puppeteer-core": "10.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-lighthouse-viewer": "^2.8.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "nodemon": "^2.0.4",
+    "nw": "0.55.0-sdk",
+    "nw-builder": "3.5.7",
+    "nwjs-builder-phoenix": "^1.15.0",
+    "nwjs-types": "^1.0.0",
+    "parcel-bundler": "^1.12.4",
+    "rimraf": "^3.0.2"
+  }
+}
