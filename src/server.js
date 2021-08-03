@@ -32,11 +32,11 @@ router.get('/api/connect-puppeteer', async (ctx) => {
 	var execPath = process.execPath;
 	var nwPath = path.join(execPath);
 	const chromiumModule = await puppeteer.launch({headless:true, executablePath: nwPath});
-    const remoteDebugPort = new URL(chromiumModule.wsEndpoint()).port;
+        const remoteDebugPort = new URL(chromiumModule.wsEndpoint()).port;
 	const resp = await util.promisify(request)(`http://localhost:${remoteDebugPort}/json/version`);
 	const webSocketDebuggerUrl = JSON.parse(resp.body);
 	try {
-	ctx.body = webSocketDebuggerUrl;
+	        ctx.body = webSocketDebuggerUrl;
 	} catch (err) {
 		ctx.body = "Error occured:" || err.message 
 	}
@@ -63,14 +63,15 @@ router.get('/api/report', async (ctx) => {
         },
         formFactor: 'desktop',
 	throttling: { 
-          cpuSlowdownMultiplier: 0
+           cpuSlowdownMultiplier: 0
 	 },
 	chromeFlags: [
-			"--disable-gpu",
-			"--no-sandbox",
+		"--disable-gpu",
+	        "--no-sandbox",
 	  ]
 	}
-	// todo: custom config
+    
+// todo: custom config
      const config = {
 	  extends: "lighthouse:default"
 	}
