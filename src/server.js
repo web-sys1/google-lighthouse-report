@@ -44,42 +44,42 @@ router.get('/api/connect-puppeteer', async (ctx) => {
 
 
 router.get('/api/report', async (ctx) => {
-	const puppeteer = require('puppeteer-core')
-	const path = require('path')
-	var nwPath = path.join(process.execPath)
+    const puppeteer = require('puppeteer-core')
+    const path = require('path')
+    var nwPath = path.join(process.execPath)
     const lighthouse = require('lighthouse')
-	const url = ctx.query.url
+    const url = ctx.query.url
 	
-	const chromiumModule = await puppeteer.launch({headless:true, executablePath: nwPath});
+    const chromiumModule = await puppeteer.launch({headless:true, executablePath: nwPath});
     const remoteDebugPort = new URL(chromiumModule.wsEndpoint()).port;
 	
-	const flags = {
-		output: 'json',
-		logLevel: 'info',
-	    port: remoteDebugPort,
-		screenEmulation: {
+    const flags = {
+	output: 'json',
+	logLevel: 'info',
+	port: remoteDebugPort,
+	screenEmulation: {
            mobile: false,
            disabled: true,
         },
         formFactor: 'desktop',
-		throttling: { 
-        cpuSlowdownMultiplier: 0
-	    },
-		chromeFlags: [
+	throttling: { 
+          cpuSlowdownMultiplier: 0
+	 },
+	chromeFlags: [
 			"--disable-gpu",
 			"--no-sandbox",
-		]
+	  ]
 	}
 	// todo: custom config
-	const config = {
-		extends: "lighthouse:default"
+     const config = {
+	  extends: "lighthouse:default"
 	}
 	try {
-		const result = await lighthouse(url, flags, config)
-		ctx.type = 'application/json; charset=utf-8'
-		ctx.body = result.lhr
-	    await chromiumModule.disconnect()
-		await chromiumModule.close()
+	  const result = await lighthouse(url, flags, config)
+	  ctx.type = 'application/json; charset=utf-8'
+	  ctx.body = result.lhr
+	  await chromiumModule.disconnect()
+	  await chromiumModule.close()
 
 	}
 	catch (err) {
