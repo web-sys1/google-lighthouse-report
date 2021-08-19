@@ -31,7 +31,7 @@ const App = () => {
   const fetchLHResults = async (data: any): Promise<any> => {
      var response = await fetch('/api/lh?url=' + data.urlTarget)
 
-	 if (!response.ok) {
+      if (!response.ok) {
       // alert(`Error on fetching results (HTTP ${response.status})`)
        ReactDOM.render(
         <div className="sda-lhr-sdl">
@@ -96,7 +96,7 @@ const App = () => {
 
   React.useEffect(() => {
     // validate onMount
-  	document.body.classList.add('bg-light');
+    document.body.classList.add('bg-light');
     handleSubmit(onSubmit)();
     // eslint-disable-next-line async (data: any) => await fetch(`./api/lh?url=${data.urlTarget}`)
   }, []);
