@@ -1,4 +1,4 @@
-# React + Koa Template
+# Lighthouse Reporter
 
 This template hooks you up with everything you need to build a React SPA with a Koa backend.
 
