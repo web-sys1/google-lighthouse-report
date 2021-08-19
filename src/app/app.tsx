@@ -1,6 +1,4 @@
 import React, {useState, useRef} from 'react'
-import { Modal, Button } from "react-bootstrap";
-import styled from 'styled-components'
 
 import ModalController from './components/modal-context'
 import PanelResult from './components/meta-context';
