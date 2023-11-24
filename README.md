@@ -1,6 +1,6 @@
 # Lighthouse Reporter
 
-This template hooks you up with everything you need to build a React SPA with a Koa backend.
+This template hooks you up with everything you need to build a React SPA with a Koa backend and React Hook form.
 
 By using this template for your next project, you
 
@@ -10,7 +10,7 @@ By using this template for your next project, you
 - Are familiar with the industry's favorite libraries.
 - Don't have to pull your hair, struggling with Webpack.
 
-Want more? Take a look at the [Demo](https://react-koa-template.herokuapp.com/), it got tons of cute dogs.
+Where to get this tool? For more details on this tool, see [this repository](https://github.com/GoogleChrome/lighthouse)!
 
 ![Lighthouse Audit](https://i.imgur.com/Nyk2o1f.png)
 

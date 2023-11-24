@@ -13,14 +13,14 @@ export async function GenerateReport(context: Context): Promise<void> {
   var nwPath = path.join(execPath);
   
   const sessionBrowser = await puppeteer.launch({
-	              executablePath: nwPath, 
+	          executablePath: nwPath, 
                   args: ['--headless',
-				         '--no-sandbox=true',
-						 '--disable-setuid-sandbox',
-						 '--disable-gpu',
-						 '--disable-raf-throttling'
-						 ]
-				  });
+	                 '--no-sandbox=true',
+                         '--disable-setuid-sandbox',
+			 '--disable-gpu',
+			 '--disable-raf-throttling'
+			]
+		 });
 				  
   const sessionPort = new URL(sessionBrowser.wsEndpoint()).port;
 
@@ -35,44 +35,38 @@ export async function GenerateReport(context: Context): Promise<void> {
         mobile: false,
         disabled: false,
        },
-    formFactor: 'desktop',
+        formFactor: 'desktop',
 	locale: lang,
-    throttling: { 
+        throttling: { 
 	    cpuSlowdownMultiplier: 0,
-		downloadThroughputKbps: 0,
+	    downloadThroughputKbps: 0,
 	    rttMs: 40,
-		requestLatencyMs: -10,
-        throughputKbps: 10240,
-		uploadThroughputKbps: 0
+	    requestLatencyMs: -10,
+            throughputKbps: 10240,
+	    uploadThroughputKbps: 0
 	   }
 	}
    
   try {
 	  const result = await lighthouse(url, lr_flags)
 	  const lhResult = result.lhr
-  /*
-	  const performanceScore = lhResult.categories.performance.score
-      const accessibilityScore = lhResult.categories.accessibility.score
-      const bestPracticesScore = lhResult.categories['best-practices'].score
-      const seoScore = lhResult.categories.seo.score
-      const pwaScore = lhResult.categories.pwa.score
-  */
+
 	  context.type = 'application/json'
 	  context.body = JSON.stringify(lhResult, null, 4)
 
 	  await OutreachReport(result.report); 
 	} 
-	catch (err) {
-		context.status = 400
-		context.type = 'text/plain; charset=utf-8'
-        console.log(`Error ${context.status}: ${err.message}`)
-		const errorMsg = {"lh_status": { "lh_error": [{"message": err,"code": err.code}],"response": context.status}}
+  catch (err) {
+	  context.status = 400
+          context.type = 'text/plain; charset=utf-8'
+          console.log(`Error ${context.status}: ${err.message}`)
+	  const errorMsg = {"lh_status": { "lh_error": [{"message": err,"code": err.code}],"response": context.status}}
 
-		context.body = JSON.stringify(errorMsg, null, 4)
+	  context.body = JSON.stringify(errorMsg, null, 4)
 	}
-  	finally {
+  finally {
 	  console.log('Waiting for browser to shut down the session.')
-      await sessionBrowser.disconnect()
+          await sessionBrowser.disconnect()
 	  await sessionBrowser.close()
 	}
 }
